@@ -12,7 +12,7 @@ pipeline {
               sh "ls -ltr"
           }
         }
-        stage(Build Docker Compose without cache) {
+        stage('Build Docker Compose without cache') {
             steps {
               sh''' sudo docker compose up -d'''
             }
