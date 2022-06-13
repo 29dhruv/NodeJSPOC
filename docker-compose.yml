@@ -1,1 +1,38 @@
+version: '3.9'
+services:
+    mongodb:
+       container_name: mongo
+       image: mongo
+       restart: always
+       volumes:
+            - mongodb:/data/db
+       ports: 
+            - 27017:27017
+       networks:
+            - app-network
 
+    node-js:
+       build: .
+       container_name: nodejs-app
+       restart: always
+       volumes: 
+            - .:/usr/scr/app
+            - /usr/src/app/node_modules
+            - /usr/src/app/views/node_modules
+       ports:
+            - 5000:5000
+            - 3000:3000
+       environment:
+             DB_URI: mongodb://mongodb:27017
+       depends_on:
+            - mongodb
+       networks:
+            - app-network
+
+networks:
+        app-network:
+           driver: bridge
+
+volumes: 
+      mongodb:
+   
