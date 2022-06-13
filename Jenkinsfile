@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-              scm checkout
+              scm checkout https://github.com/29dhruv/NodeJSPOC.git
           }
         }
         stage('Build Docker Compose without cache') {
@@ -23,7 +23,8 @@ pipeline {
         stage('close the application') {
             steps {
               sh'''
-              if ["$deploy = false"]
+              if 
+              ["$deploy=false"]
               then
               sudo docker compose stop
               sudo docker compose down
