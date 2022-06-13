@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent baccha
     stages {
         stage('Build') {
             steps {
