@@ -14,16 +14,22 @@ pipeline {
                sudo docker compose build --no-cache
                sudo docker compose up -d
                sudo docker ps | grep node && sudo docker ps | grep mongo
+               else
+               echo "recheck"
+               fi
                '''            
             }
         }
         stage('close the application') {
             steps {
               sh'''
-              else ["$deploy=false"]
+              if ["$deploy = false"]
               then
               sudo docker compose stop
               sudo docker compose down
+              else
+              echo"bhkkk"
+              fi
               '''
             }
     }
