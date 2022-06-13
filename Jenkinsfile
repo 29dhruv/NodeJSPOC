@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-              scm checkout https://github.com/29dhruv/NodeJSPOC.git
+              checkout scm 
           }
         }
         stage('Build Docker Compose without cache') {
