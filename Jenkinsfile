@@ -3,19 +3,28 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-              checkout([$class: 'GitSCM', 
-                branches: [[name: '*/main']],
-                doGenerateSubmoduleConfigurations: false,
-                extensions: [[$class: 'CleanCheckout']],
-                submoduleCfg: [], 
-                userRemoteConfigs: [[url: 'https://github.com/29dhruv/NodeJSPOC.git']]])
-              sh "ls -ltr"
+              scm checkout
           }
         }
         stage('Build Docker Compose without cache') {
             steps {
-              sh''' sudo docker compose up -d'''
+              sh'''
+               if ["$deploy" = true]
+               then
+               sudo docker compose build --no-cache
+               sudo docker compose up -d
+               sudo docker ps | grep node && sudo docker ps | grep mongo
+               '''            
             }
         }
+        stage('close the application') {
+            steps {
+              sh'''
+              else ["$deploy=false"]
+              then
+              sudo docker compose stop
+              sudo docker compose down
+              '''
+            }
     }
 }
