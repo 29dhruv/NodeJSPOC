@@ -24,15 +24,15 @@ pipeline {
             steps {
               sh'''
               if 
-              ["$deploy=false"]
+              ["$close=true"]
               then
               sudo docker compose stop
               sudo docker compose down
               else
-              echo"bhkkk"
+              echo "bhkkk"
               fi
               '''
-            }
+           }
+       }
     }
- }
 }
